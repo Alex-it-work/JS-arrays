@@ -19,7 +19,7 @@ function createRandomArray(arrayLenght) {
 }
 // Альтернативное решение:
 // function createRandomArray(arrayLenght) {
-//   let newArray = [];
+//   const newArray = [];
 //   for (let i = 0; i < arrayLenght; i++) {
 //     newArray.push(Math.floor(Math.random() * arrayLenght));
 //   }
