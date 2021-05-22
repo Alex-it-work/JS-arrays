@@ -4,17 +4,18 @@
 // Array.from({ length: 40 }, () => Math.floor(Math.random() * 40));
 // просмотрел в MDN синтаксис, разобрал как работает , поэтому решил что могу применить в дз
 
-const randomArray = createRandomArray(15);
+const randomArray = createRandomArray(15, 15);
 showArray(randomArray);
 
 /**
  *
  * @param {number} arrayLenght
- * @returns {Array} random integer (from 0, to arrayLenght) array
+ * @param {number} maxValue
+ * @returns {Array} random integer (from 0, to maxValue) array
  */
-function createRandomArray(arrayLenght) {
+function createRandomArray(arrayLenght, maxValue) {
   return Array.from({ length: arrayLenght }, () =>
-    Math.floor(Math.random() * arrayLenght)
+    Math.floor(Math.random() * maxValue)
   );
 }
 // Альтернативное решение:
@@ -53,7 +54,7 @@ console.log(
 );
 
 for (let i = 0; i < randomArray.length; i++) {
-  if (randomArray[i] !== 0 && randomArray[i] % 2 === 0) {
+  if (randomArray[i] % 2 === 0) {
     console.log(`randomArray[${i}] = ${randomArray[i]}`);
   }
 }
@@ -96,12 +97,9 @@ randomArray.forEach(function (item) {
 
 showArray(positiveNegativeValuesArray);
 
-const positiveValuesArray = [];
-randomArray.forEach(function (item) {
-  if (item > 0) {
-    positiveValuesArray.push(item);
-  }
-});
+const positiveValuesArray = positiveNegativeValuesArray.filter(
+  (item) => item > 0
+);
 
 showArray(positiveValuesArray);
 
@@ -111,12 +109,10 @@ console.log(
   "// 8 Получить новый массив их заданного, который будет содержать все элементы исходного, возведенные в квадрат (-1, 5, 0, 9, -10 => 1, 25, 0, 81, 100)."
 );
 
-const powTwoArray = [];
-positiveNegativeValuesArray.forEach(function (item) {
-  powTwoArray.push(item ** 2);
-});
+const powTwoArray = positiveNegativeValuesArray.map((item) => item ** 2);
 
 showArray(powTwoArray);
+
 // 9 Проверить, являются ли все елементы массива положительными числами (* или в принципе числами).
 // Array.prototype.every()
 console.log(
@@ -167,8 +163,9 @@ function MyArray() {
 const myArrayProto = new MyArray();
 myArrayProto.unshift = function (item) {
   for (let i = this.length; i >= 0; i--) {
-    i === 0 ? (this[0] = item) : (this[i] = this[i - 1]);
+    this[i] = this[i - 1];
   }
+  this[0] = item;
   return ++this.length;
 };
 
